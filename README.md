@@ -15,5 +15,3 @@ Objects in project
 * Answer
 
 * Result
-
-
