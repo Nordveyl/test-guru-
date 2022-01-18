@@ -12,8 +12,8 @@ users = User.create([
 ])
 
 categories = Category.create([
-	{ name: "Frontend" }, 
-	{ name: "Backend" }
+  { name: "Frontend" }, 
+  { name: "Backend" }
 ])
 
 tests = Test.create([
