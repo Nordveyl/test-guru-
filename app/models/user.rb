@@ -1,10 +1,9 @@
 class User < ApplicationRecord
-  has_many :results 
-  has_many :tests, through: :results
-  has_many :created_tests, class_name 'Test'
+  has_many :results, dependent: :destroy 
+  has_many :tests, through: :results, dependent: :destroy
+  has_many :created_tests, class_name 'Test', dependent: :destroy
+
   def show_passed_tests(level)
-    Test 
-      .joins('JOIN results ON rusults.test_id = tests.id')
-      .where(results: {user_id: id}, level: level)
+   tests.where(level: level)
   end     
 end
