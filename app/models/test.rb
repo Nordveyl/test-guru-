@@ -4,7 +4,7 @@ class Test < ApplicationRecord
 
   has_many :questions, dependent: :destroy 
   has_many :results, dependent: :destroy 
-  has_many :users, through: :results, dependent: :destroy
+  has_many :users, through: :results
 
   def self.sort_by_category(category_name)
     Test 

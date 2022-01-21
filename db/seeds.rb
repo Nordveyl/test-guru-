@@ -25,9 +25,3 @@ questions = Question.create!([
   { name: "What is the most popular framework?", test: tests[1] }, 
   { name: "Are all tags paired?", test: tests[0] }
 ])
-
-results = Result.create!([
-  { points: 50, user: users[1], test: tests[0] }, 
-  { points: 100, user: users[0], test: tests[0] },
-  { points: 100, user: users[0], test: tests[1] } 
-])
