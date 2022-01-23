@@ -17,17 +17,11 @@ categories = Category.create!([
 ])
 
 tests = Test.create!([
-  { title: "HTML", category_id: categories[0].id , author_id: users[0].id }, 
-  { title: "Ruby", category_id: categories[1].id , author_id: users[1].id}
+  { title: "HTML", category: categories[0] , author: users[0] }, 
+  { title: "Ruby", category: categories[1] , author: users[1]}
 ])
 
 questions = Question.create!([
-  { name: "What is the most popular framework?", test_id: tests[1].id }, 
-  { name: "Are all tags paired?", test_id: tests[0].id }
-])
-
-results = Result.create!([
-  { points: 50, user_id: users[1].id, test_id: tests[0].id }, 
-  { points: 100, user_id: users[0].id, test_id: tests[0].id },
-  { points: 100, user_id: users[0].id, test_id: tests[1].id } 
+  { name: "What is the most popular framework?", test: tests[1] }, 
+  { name: "Are all tags paired?", test: tests[0] }
 ])
