@@ -20,5 +20,5 @@ class Test < ApplicationRecord
       .where(categories: { name: category_name})
       .order(id: :DESC)
       .pluck(:title)
-  end     
+  end
 end
