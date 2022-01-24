@@ -27,6 +27,6 @@ class Test < ApplicationRecord
   private 
 
   def validate_min_level 
-    errors.add(:level) if level.to_i > 0
+    errors.add :level if level.to_i > 0
   end    
 end
