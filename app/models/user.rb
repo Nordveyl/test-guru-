@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  has_many :results
-  has_many :tests, through: :results, dependent: :destroy
+  has_many :results, dependent: :destroy
+  has_many :tests, through: :results
   has_many :created_tests, class_name 'Test', dependent: :destroy
 
   validates :first_name, presence: true 
