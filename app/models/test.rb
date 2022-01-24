@@ -6,15 +6,13 @@ class Test < ApplicationRecord
   has_many :results, dependent: :destroy
   has_many :users, through: :results
 
+  validates :title, presence: true 
+  validates :level, numericality: { only_integer: true, greater_than: 0 } 
+  validates :title, uniqueness: { scope: :level }
+
   scope :easy, -> { where(level: 0..1) }
   scope :medium, -> { where(level: 2..4) }
   scope :hard, -> { where(level: 5..Float::INFINITY) }
-
-  validates :title, presence: true 
-  validates :level, numericality: { only_integer: true }
-  validates :title, uniqueness: { scope: :level }
-
-  validate :validate_min_level
 
   def self.sort_by_category(category_name)
     Test 
@@ -22,11 +20,5 @@ class Test < ApplicationRecord
       .where(categories: { name: category_name})
       .order(id: :DESC)
       .pluck(:title)
-  end   
-
-  private 
-
-  def validate_min_level 
-    errors.add :level if level.to_i <= 0
-  end    
+  end     
 end
