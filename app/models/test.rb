@@ -14,7 +14,7 @@ class Test < ApplicationRecord
   validates :level, numericality: { only_integer: true }
   validates :title, uniqueness: { scope: :level }
 
-  validete :validate_min_level
+  validate :validate_min_level
 
   def self.sort_by_category(category_name)
     Test 
@@ -27,6 +27,6 @@ class Test < ApplicationRecord
   private 
 
   def validate_min_level 
-    errors.add :level if level.to_i > 0
+    errors.add :level if level.to_i <= 0
   end    
 end
