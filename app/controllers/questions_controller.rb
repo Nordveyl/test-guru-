@@ -3,19 +3,19 @@ class QuestionsController < ApplicationController
   before_action :find_question, only: %i[show destroy]
 
   rescue_from ActiveRecord::RecordNotFound, with: :rescue_with_question_not_found
-  
+
   def index 
     questions = @test.questions.pluck(:name)
     render plain: questions.join('  ')
   end 
 
   def create 
-    question = @test.questions.create(question_params)
-    if question.persisted?
-      redirect_to test_questions_path(@test)
-    else 
-      render plain: 'not successfully'
-    end        
+    @question = @test.questions.build(question_params)
+    if @question.save
+      redirect_to @question
+    else
+      render :new
+    end   
   end   
 
   def new; end 
