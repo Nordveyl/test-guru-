@@ -12,6 +12,7 @@ module TestGuru
     config.load_defaults 7.0
     config.time_zone = 'Moscow' 
     config.i18n.default_locale = :ru
+    I18n.config.available_locales = :ru
 
     # Configuration for the application, engines, and railties goes here.
     #
