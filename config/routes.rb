@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   resources :tests do
-    resources :questions, shallow: true 
+    resources :questions, except: :index, shallow: true 
   end   
 end
