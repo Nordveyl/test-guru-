@@ -14,7 +14,7 @@ class QuestionsController < ApplicationController
   end   
 
   def new
-    @question = Question.new(test: @test)
+    @question = @test.questions.build
   end 
 
   def show
