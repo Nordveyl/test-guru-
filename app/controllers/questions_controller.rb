@@ -18,7 +18,6 @@ class QuestionsController < ApplicationController
   end 
 
   def show
-    render plain: @question.name
   end 
 
   def destroy 
