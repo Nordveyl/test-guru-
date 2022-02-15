@@ -1,17 +1,17 @@
 class AnswersController < ApplicationController  
-  before_action :find_question, only: %i[ new create ]
-  before_action :set_answer, only: %i[ show edit update destroy ]
+  before_action :set_question, only: %i[new create]
+  before_action :set_answer, only: %i[show edit update destroy]
   
   def show; end
   
   def new
-    @answer = @quesion.answers.new
+    @answer = @question.answers.new
   end
   
   def edit; end
 
   def create
-    @answer = Answer.new(answer_params)
+    @answer = @question.answers.build(answer_params)
     if @answer.save 
       redirect_to @answer 
     else 
@@ -34,8 +34,8 @@ class AnswersController < ApplicationController
 
   private
 
-  def find_question 
-    @question = Question.find(params[:quesion_id])
+  def set_question 
+    @question = Question.find(params[:question_id])
   end 
       
   def set_answer
@@ -43,6 +43,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:question).permit(:name, :correct) 
+    params.require(:answer).permit(:name, :correct) 
   end
 end

@@ -1,11 +1,11 @@
 class TestPassage < ApplicationRecord
+  SUCCESS_RATIO = 85
+
   belongs_to :user
   belongs_to :test
   belongs_to :current_question, class_name: 'Question', optional: true
 
-  before_validation :before_validation_set_first_question, on: :create 
-
-  before_update :before_update_set_next_question
+  before_validation :set_current_question
 
   def accept!(answer_ids)
     if correct_answer?(answer_ids) 
@@ -19,8 +19,7 @@ class TestPassage < ApplicationRecord
   end 
 
   def number_of_current_question 
-    index = test.questions.pluck(:id).index(current_question.id)
-    nubber_of_question = index + 1
+    test.questions.order(:id).where('id < ?', current_question.id).size + 1
   end 
     
   def count_of_questions  
@@ -28,7 +27,7 @@ class TestPassage < ApplicationRecord
   end   
 
   def successful? 
-    procents_of_succesful >= 85
+    procents_of_succesful >= SUCCESS_RATIO
   end 
 
   def procents_of_succesful  
@@ -37,27 +36,27 @@ class TestPassage < ApplicationRecord
   
   private 
 
-  def before_validation_set_first_question
-    self.current_question = test.questions.first if test.present? 
-  end   
-
   def correct_answer?(answer_ids)
-    correct_answers.ids.sort == answer_ids.map(&:to_i).sort 
-
-    if answers.ids == nil 
+    if answer_ids != nil 
+      correct_answers.ids.sort == answer_ids.map(&:to_i).sort 
+    else 
       false  
-    end   
+    end      
   end 
   
   def correct_answers 
     corrent_question.answers.correct   
   end   
 
-  def next_qestion 
-    test.questions.order(:id).where('id > ?', current_question.id).first 
+  def next_question 
+    if self.current_question == nil 
+      self.current_question = test.questions.first if test.present?
+    else   
+      self.current_question = test.questions.order(:id).where('id > ?', current_question.id).first 
+    end   
   end  
 
-  def before_update_set_next_question 
-    self.current_question = next_qestion
-  end    
+  def set_current_question
+    self.current_question = next_question
+  end
 end
